@@ -1,9 +1,59 @@
-## Here is an example for nanorc files.
-##
-syntax "Conf" "\.c[o]?nf$"
+syntax "conf" "(\.(conf|config|cfg|cnf|rc|lst|list|defs|ini|desktop|mime|types|preset|cache|seat|service|htaccess)$|(^|/)(\w*crontab|mirrorlist|group|hosts|passwd|rpc|netconfig|shadow|fstab|inittab|inputrc|protocols|sudoers|adblock|clamav|config|ddns|dhcp|dropbear|dhcp|etherwake|firewall|freshclam|hd-idle|luci|luci-statistics|minidlna|network|openvpn|p910nd|privoxy|qos|samba|sqm|ssh_config|sshd_config|system|ucitrack|uhttpd|wifi_schedule|wireless|root|banner|banner.failsafe|device_info|monitrc|.vimrc|.viminfo|)$|conf.d/|.config/)"
+
 ## Possible errors and parameters
+
 ## Strings
-icolor white ""(\\.|[^"])*""
+#icolor white ""(\\.|[^"])*""
+
 ## Comments
-icolor brightblue "^[[:space:]]*#.*$"
-icolor cyan "^[[:space:]]*##.*$"
+#icolor brightblue "^[[:space:]]*#.*$"
+#icolor cyan "^[[:space:]]*##.*$"
+
+# default text
+color magenta "^.*$"
+
+# special values
+icolor brightblue "(^|\s|=)(default|true|false|on|off|yes|no)(\s|$)"
+
+# keys
+icolor cyan "^\s*(set\s+)?[A-Z0-9_\/\.\%\@+-]+\s*([:]|\>)"
+
+# commands
+color blue "^\s*set\s+\<"
+
+# punctuation
+color blue "[.]"
+
+# numbers
+color yellow "(^|\s|[[/:|<>(){}=,]|\])[-+]?[0-9](\.?[0-9])*%?($|\>)"
+
+# keys
+icolor cyan "^\s*(\$if )?([A-Z0-9_\/\.\%\@+-]|\s)+="
+
+# punctuation
+color blue "/"
+color brightwhite "(\]|[()<>[{},;:=])"
+color brightwhite "(^|\[|\{|\:)\s*-(\s|$)"
+
+# section headings
+icolor brightyellow "^\s*(\[([A-Z0-9_\.-]|\s)+\])+\s*$"
+color brightcyan "^\s*((Sub)?Section\s*(=|\>)|End(Sub)?Section\s*$)"
+color brightcyan "^\s*\$(end)?if(\s|$)"
+
+# URLs
+icolor brightgreen "\b(([A-Z]+://|www[.])[A-Z0-9/:#?&$=_\.\-]+)(\b|$| )"
+
+# XML-like tags
+icolor brightcyan "</?\w+((\s*\w+\s*=)?\s*("[^"]*"|'[^']*'|!?[A-Z0-9_:/]))*(\s*/)?>"
+
+# strings
+color green "\"(\\.|[^"])*\"" "'(\\.|[^'])*'"
+
+# comments
+color brightblack "#.*$"
+color brightblack "^\s*##.*$"
+color white "^;.*$"
+color white start="<!--" end="-->"
+
+# Trailing spaces
+color ,red "[[:space:]]+$"
