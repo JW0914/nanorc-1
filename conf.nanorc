@@ -1,11 +1,62 @@
 ## Here is an example for nanorc files.
-##
-syntax "Conf" "\.c[o]?nf$"
-## Possible errors and parameters
-## Strings
+
+# Possible errors and parameters:
+
+  # Default:
+    ##syntax "conf" "\.c[o]?nf$"
+    # Strings
+      ##icolor white ""(\\.|[^"])*""
+    # Comments
+      ##icolor brightblue "^[[:space:]]*#.*$"
+      ##icolor cyan "^[[:space:]]*##.*$"
+    # Trailing spaces
+      ##color ,green "[[:space:]]+$"
+
+##syntax "conf" "(\.(conf|config|cfg|cnf|rc|lst|list|defs|ini|desktop|mime|types|preset|cache|seat|service|htaccess)$|(^|/)(\w*crontab|mirrorlist|group|hosts|passwd|rpc|netconfig|shadow|fstab|inittab|inputrc|protocols|sudoers|adblock|clamav|config|ddns|dhcp|dropbear|dhcp|etherwake|firewall|freshclam|hd-idle|luci|luci-statistics|minidlna|network|openvpn|p910nd|privoxy|qos|samba|sqm|ssh_config|sshd_config|system|ucitrack|uhttpd|wifi_schedule|wireless|root|banner|banner.failsafe|device_info|monitrc|.vimrc|.viminfo|)$|conf.d/|.config/)"
+
+syntax "default"
+
+# Comments:
+color brightblack "^\s*##.*$"
+color white "^;.*$"
+color white start="<!--" end="-->"
+
+# Default Text:
+color magenta "^.*$"
+
+# Special Values:
+icolor brightblue "(^|\s|=)(default|true|false|on|off|yes|no)(\s|$)"
+
+# Commands:
+color blue "^\s*set\s+\<"
+
+# Numbers:
+color yellow "(^|\s|[[/:|<>(){}=,]|\])[-+]?[0-9](\.?[0-9])*%?($|\>)"
+
+# Keys:
+icolor cyan "^\s*(set\s+)?[A-Z0-9_\/\.\%\@+-]+\s*([:]|\>)"
+icolor cyan "^\s*(\$if )?([A-Z0-9_\/\.\%\@+-]|\s)+="
+
+# Punctuation:
+color blue "[.]"
+color blue "/"
+color brightwhite "(\]|[()<>[{},;:=])"
+color brightwhite "(^|\[|\{|\:)\s*-(\s|$)"
+
+# Section Headings:
+icolor brightyellow "^\s*(\[([A-Z0-9_\.-]|\s)+\])+\s*$"
+color brightcyan "^\s*((Sub)?Section\s*(=|\>)|End(Sub)?Section\s*$)"
+color brightcyan "^\s*\$(end)?if(\s|$)"
+
+# URLs:
+icolor brightgreen "\b(([A-Z]+://|www[.])[A-Z0-9/:#?&$=_\.\-]+)(\b|$| )"
+
+# XML-like tags:
+icolor brightcyan "</?\w+((\s*\w+\s*=)?\s*("[^"]*"|'[^']*'|!?[A-Z0-9_:/]))*(\s*/)?>"
+
+# Strings:
 icolor white ""(\\.|[^"])*""
-## Comments
-icolor brightblue "^[[:space:]]*#.*$"
-icolor cyan "^[[:space:]]*##.*$"
-## Trailing spaces
-color ,green "[[:space:]]+$"
+color green "\"(\\.|[^"])*\"" "'(\\.|[^'])*'"
+
+# Trailing spaces
+color ,red "[[:space:]]+$"
